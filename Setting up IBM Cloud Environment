@@ -1,0 +1,27 @@
+Setting up IBM Cloud Environment and Configuring Necessary Tools Step 1: Create an IBM Cloud Account
+1.	Go to the IBM Cloud website (https://cloud.ibm.com/).
+
+2.	Sign up for an account (or log in if you already have one).
+
+3.	Make sure  you have a billing account set up to access IBM Cloud services.
+
+Step 2: Install Necessary Tools Locally
+
+1.	Install Minikube:
+
+o	Follow the official Minikube installation guide to setup on your system .
+
+2.	Install kubectl:
+
+o	Download and configure the kubectl CLI by referring to the official Kubernetes documentation.  .
+
+3.	Install Docker:
+
+o	Set up Docker to build and manage container images. You can follow the official Docker installation guide for instructions.  
+Step 3: Configure  IBM Cloud Container Registry
+
+1.	 In the IBM Cloud dashboard, search for *"Container Registry."*
+2.	Create a namespace for storing your container images:
+ibmcloud cr namespace-add <namespace_name>
+3.	Enable image vulnerability scanning:
+ibmcloud cr policy-update --scan-on-push true 
