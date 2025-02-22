@@ -1,0 +1,31 @@
+Step 1: Dockerize the Application
+1.	Create Dockerfiles:
+
+o	Frontend Dockerfile (/public/Dockerfile): FROM node:16-alpine
+WORKDIR /app COPY  package*.json./ 
+RUN npm install 
+COPY..
+EXPOSE 5000
+CMD ["npm", "start"]
+
+o	Backend Dockerfile (/server/Dockerfile): FROM node:16-alpine
+WORKDIR /app COPY  package*.json ./.
+RUN npm install 
+COPY..
+EXPOSE 5000
+
+CMD ["node", "server.js"]
+
+
+2.Build Docker Images:
+docker build -t frontend-app:1.0 ./public docker build -t backend-app:1.0 ./server
+
+Step 2: Push Docker Images to IBM Cloud Container Registry
+
+1.	Tag the images:
+
+docker tag frontend-app:1.0 <region>.icr.io/<namespace>/frontend-app:1.0 docker tag backend-app:1.0 <region>.icr.io/<namespace>/backend-app:1.0
+2.	Log in to IBM Cloud Container Registry: ibmcloud cr login
+3.	Push the images:
+
+docker push <region>.icr.io/<namespace>/frontend-app:1.0 docker push <region>.icr.io/<namespace>/backend-app:1.0
