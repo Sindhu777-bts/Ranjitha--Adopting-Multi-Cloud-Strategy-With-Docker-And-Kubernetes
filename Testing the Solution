@@ -1,0 +1,96 @@
+Step 1: Configure Minikube and Deploy Applications@
+
+1.	Start Minikube: minikube start
+2.	Develop Kubernetes Deployment and Service YAML Files:
+
+o	Frontend Deployment (frontend-deployment.yaml): apiVersion: apps/v1
+kind: Deployment metadata:
+name: frontend-deployment spec:
+replicas: 3 selector:
+matchLabels: app: frontend
+template: metadata:
+     labels:
+
+app: frontend spec:
+containers:
+
+- name: frontend
+
+image: <region>.icr.io/<namespace>/frontend-app:1.0 ports:
+- containerPort: 3000
+
+---
+
+apiVersion: v1 kind: Service metadata:
+name: frontend-service spec:
+type: NodePort selector:
+app: frontend ports:
+- port: 3000
+
+targetPort: 3000
+
+      
+
+o	Backend Deployment (backend-deployment.yaml): apiVersion: apps/v1
+kind: Deployment metadata:
+name: backend-deployment spec:
+replicas: 2 
+selector:
+matchLabels:
+
+app: backend template:
+metadata:
+
+labels:
+
+app: backend spec:
+containers:
+
+- name: backend
+
+image: <region>.icr.io/<namespace>/backend-app:1.0 ports:
+- containerPort: 5000
+
+---
+
+apiVersion: v1 kind: Service metadata:
+name: backend-service spec:
+type: NodePort 
+
+
+selector:
+app: backend ports:
+- port: 5000
+
+targetPort: 5000
+
+3.	Apply Deployment YAML Files:
+
+kubectl apply -f frontend-deployment.yaml kubectl apply -f backend-deployment.yaml Step 2: Confirm  Deployments
+1.	Check running pods: kubectl get pods
+2.	Check services: kubectl get svc
+3.	Access the deployed applications:
+
+o	Utilize the Minikube service IP or a tunnel to reveal services.
+
+Step 3: Testing CI/CD Integration
+
+1.	 Configure GitHub Actions using a CI/CD pipeline YAML files.
+
+2.	Automate build, test, and deployment stages using Minikube and IBM Cloud CLI.
+
+3.	Configure the pipeline to:  
+   - Checkout code from GitHub.  
+   - Build and push Docker images to respective cloud registries.  
+   - Deploy to Kubernetes clusters using Helm charts.  
+   - Validate deployments with automated tests.  
+
+Step 4: Conduct Stress and Load Testing
+
+1.	 Employ tools like Apache JMeter or Postman..
+
+2.	Monitor performance using Minikube’s dashboard or tools like Grafana.
+
+
+3.	Analyze resource utilization and ensure auto-scaling mechanisms function correctly.  
+4.	Fine-tune infrastructure settings for optimal performance and cost efficiency.  
